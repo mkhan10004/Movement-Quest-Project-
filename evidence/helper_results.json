@@ -1,0 +1,142 @@
+{
+  "fixture_clock_utc": "2026-10-22T12:00:00Z",
+  "fixture_type": "Synthetic convenience preference labels",
+  "cases": [
+    {
+      "case": "normal",
+      "expected_plan": 3,
+      "actual_plan": 3,
+      "expected_invalid": false,
+      "actual_invalid": false,
+      "passed": true,
+      "preference_label": 3,
+      "baseline_plan": 1,
+      "helper_match": true,
+      "baseline_match": false,
+      "reason": "Matches bodyweight; 0 completed in the last 7 days. Suggested, not guaranteed. Choose any plan."
+    },
+    {
+      "case": "no catalog",
+      "expected_plan": null,
+      "actual_plan": null,
+      "expected_invalid": false,
+      "actual_invalid": false,
+      "passed": true,
+      "preference_label": null,
+      "baseline_plan": null,
+      "helper_match": null,
+      "baseline_match": null,
+      "reason": "Create a plan first."
+    },
+    {
+      "case": "no history",
+      "expected_plan": 2,
+      "actual_plan": 2,
+      "expected_invalid": false,
+      "actual_invalid": false,
+      "passed": true,
+      "preference_label": 2,
+      "baseline_plan": 1,
+      "helper_match": true,
+      "baseline_match": false,
+      "reason": "Matches bodyweight; 0 completed in the last 7 days. No completed history yet. Suggested, not guaranteed. Choose any plan."
+    },
+    {
+      "case": "invalid preference",
+      "expected_plan": null,
+      "actual_plan": null,
+      "expected_invalid": true,
+      "actual_invalid": true,
+      "passed": true,
+      "preference_label": null,
+      "baseline_plan": 1,
+      "helper_match": null,
+      "baseline_match": null,
+      "reason": "Choose a listed equipment preference in Settings."
+    },
+    {
+      "case": "invalid history",
+      "expected_plan": null,
+      "actual_plan": null,
+      "expected_invalid": true,
+      "actual_invalid": true,
+      "passed": true,
+      "preference_label": null,
+      "baseline_plan": 1,
+      "helper_match": null,
+      "baseline_match": null,
+      "reason": "History is invalid. Correct the saved history before using suggestions."
+    },
+    {
+      "case": "boundary inclusive",
+      "expected_plan": 3,
+      "actual_plan": 3,
+      "expected_invalid": false,
+      "actual_invalid": false,
+      "passed": true,
+      "preference_label": 3,
+      "baseline_plan": 2,
+      "helper_match": true,
+      "baseline_match": false,
+      "reason": "Matches bodyweight; 0 completed in the last 7 days. Suggested, not guaranteed. Choose any plan."
+    },
+    {
+      "case": "older than boundary",
+      "expected_plan": 2,
+      "actual_plan": 2,
+      "expected_invalid": false,
+      "actual_invalid": false,
+      "passed": true,
+      "preference_label": 2,
+      "baseline_plan": 2,
+      "helper_match": true,
+      "baseline_match": true,
+      "reason": "Matches bodyweight; 0 completed in the last 7 days. Suggested, not guaranteed. Choose any plan."
+    },
+    {
+      "case": "tie",
+      "expected_plan": 2,
+      "actual_plan": 2,
+      "expected_invalid": false,
+      "actual_invalid": false,
+      "passed": true,
+      "preference_label": 2,
+      "baseline_plan": 2,
+      "helper_match": true,
+      "baseline_match": true,
+      "reason": "No equipment preference; 0 completed in the last 7 days. No completed history yet. Suggested, not guaranteed. Choose any plan."
+    },
+    {
+      "case": "penalty cap",
+      "expected_plan": 2,
+      "actual_plan": 2,
+      "expected_invalid": false,
+      "actual_invalid": false,
+      "passed": true,
+      "preference_label": 2,
+      "baseline_plan": 2,
+      "helper_match": true,
+      "baseline_match": true,
+      "reason": "Matches bodyweight; 2 completed in the last 7 days. Suggested, not guaranteed. Choose any plan."
+    },
+    {
+      "case": "counterexample",
+      "expected_plan": 3,
+      "actual_plan": 3,
+      "expected_invalid": false,
+      "actual_invalid": false,
+      "passed": true,
+      "preference_label": 2,
+      "baseline_plan": 2,
+      "helper_match": false,
+      "baseline_match": true,
+      "reason": "Matches bodyweight; 0 completed in the last 7 days. Suggested, not guaranteed. Choose any plan."
+    }
+  ],
+  "metric": {
+    "n": 7,
+    "helper_matches": 6,
+    "baseline_matches": 4
+  },
+  "limitation": "Small hand-authored fixtures; not a user study, health measure or held-out ML evaluation."
+}
