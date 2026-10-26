@@ -18,6 +18,47 @@ class QuestController extends ChangeNotifier {
     if (!_closed) notifyListeners();
   }
 
+  Future<void> initialize() async {
+    loading = true;
+    _emit();
+    try {
+      settings = await settingsStore.read();
+      settingsError = null;
+    } catch (_) {
+      settingsError =
+          'Preferences could not be loaded. Retry or restore defaults.';
+    }
+    await refresh();
+  }
+
+  Future<void> refresh() async {
+    try {
+      final nextPlans = await repository.plans();
+      final nextLogs = await repository.logs();
+      plans = nextPlans;
+      logs = nextLogs;
+      readError = null;
+    } catch (_) {
+      readError = 'Saved records could not be loaded. Retry. Existing data is unchanged.';
+    }
+    loading = false;
+    _emit();
+  }
+
+  Future<void> write(Future<void> Function() operation) async {
+    if (busy) throw StateError('A save is already in progress.');
+    busy = true;
+    _emit();
+    try {
+      await operation();
+      await refresh();
+    } finally {
+      busy = false;
+      _emit();
+    }
+  }
+
+ 
   WorkoutPlan? plan(int id) {
     for (final p in plans) {
       if (p.id == id) return p;
