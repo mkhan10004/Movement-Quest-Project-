@@ -1,26 +1,18 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 
-import '../models/workout.dart';
-
-/// Educational reconstruction. Not an authentic historical Git revision.
 class QuestRepository {
   final Database db;
-  final int Function() clock;
-  bool rejectNextWrite = false;
 
-  QuestRepository(this.db, {int Function()? clock})
-      : clock = clock ?? (() => DateTime.now().millisecondsSinceEpoch);
+  QuestRepository(this.db);
 
-  static Future<QuestRepository> open() async => QuestRepository(
-    await openDatabase(
-      p.join(await getDatabasesPath(), 'movement_quest.db'),
-      version: 1,
-    ),
-  );
+  static Future<QuestRepository> open() async {
+    final path = p.join(await getDatabasesPath(), 'movement_quest.db');
+
+    final db = await openDatabase(path, version: 1);
+
+    return QuestRepository(db);
+  }
 
   Future<void> close() => db.close();
 }
