@@ -13,6 +13,15 @@ WorkoutPlan fixturePlan(int id, String equipment) => WorkoutPlan(
   createdAt: fixtureNow,
   updatedAt: fixtureNow,
 );
-
-  
-}
+TrainingLog fixtureLog(int id, int planId, int at) => TrainingLog(
+  id: id,
+  planId: planId,
+  token: 'fixture-$id',
+  status: 'completed',
+  startedAt: at,
+  completedAt: at,
+  targetSets: 1,
+  targetReps: 10,
+  exerciseName: 'Squat',
+  actualSets: [10],
+);
