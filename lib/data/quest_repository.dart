@@ -183,6 +183,32 @@ class QuestRepository {
     });
   }
 
+  Future<void> finish(int id) async {
+    _beforeWrite();
+    await db.transaction((tx) async {
+      final log = await _log(tx, id);
+      if (log.completed)
+        return; // Idempotent finish keeps the original timestamp.
+      TrainingLog.validateSets(log.actualSets, log.targetSets, complete: true);
+      await tx.update(
+        'training_logs',
+        {'status': 'completed', 'completed_at': clock()},
+        where: "id=? AND status='draft'",
+        whereArgs: [id],
+      );
+    });
+  }
+
+  Future<void> reset(int id) async {
+    _beforeWrite();
+    await db.delete(
+      'training_logs',
+      where: "id=? AND status='draft'",
+      whereArgs: [id],
+    );
+  }
+
+
   Future<void> deleteLog(int id) async {
     _beforeWrite();
     await db.delete('training_logs', where: 'id=?', whereArgs: [id]);
