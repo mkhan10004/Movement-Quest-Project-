@@ -208,6 +208,47 @@ class QuestRepository {
     );
   }
 
+  Future<void> saveHistory({
+    int? id,
+    required int planId,
+    required List<int> sets,
+    required int at,
+  }) async {
+    if (at < 0 || at > clock())
+      throw const FormatException(
+        'Choose a valid date that is not in the future.',
+      );
+    _beforeWrite();
+    await db.transaction((tx) async {
+      final plan = await _plan(tx, planId);
+      final old = id == null ? null : await _log(tx, id);
+      if (old != null && (!old.completed || old.planId != planId))
+        throw StateError('Only completed logs can be corrected here.');
+      final target = old?.targetSets ?? plan.targetSets;
+      TrainingLog.validateSets(sets, target, complete: true);
+      final values = <String, Object?>{
+        'plan_id': planId,
+        'session_token': old?.token ?? _token(),
+        'status': 'completed',
+        'started_at': at,
+        'completed_at': at,
+        'target_sets_snapshot': target,
+        'target_reps_snapshot': old?.targetReps ?? plan.targetReps,
+        'exercise_name_snapshot': old?.exerciseName ?? plan.exerciseName,
+        'actual_sets_json': jsonEncode(sets),
+      };
+      if (id == null) {
+        await tx.insert('training_logs', values);
+      } else {
+        await tx.update(
+          'training_logs',
+          values,
+          where: 'id=?',
+          whereArgs: [id],
+        );
+      }
+    });
+  }
 
   Future<void> deleteLog(int id) async {
     _beforeWrite();
