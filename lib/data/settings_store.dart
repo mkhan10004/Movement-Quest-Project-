@@ -45,3 +45,16 @@ class SettingsStore {
     return settings;
   }
 
+  Future<void> save(QuestSettings settings) async {
+    settings.validate();
+    // One value avoids a partially saved multi-key settings change.
+    await prefs.setString(
+      'quest_settings_v1',
+      jsonEncode({
+        'theme': settings.theme,
+        'equipment': settings.equipment,
+        'motion': settings.motion,
+      }),
+    );
+  }
+}
