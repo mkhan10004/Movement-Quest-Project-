@@ -91,3 +91,10 @@ Default: loaded saved preferences. Empty: no preference keys, display System / N
 
 Use readable contrast, text labels and 48 logical-pixel targets. Numeric fields show units and validate whole numbers. Support portrait/landscape, scrolling, keyboard insets and large text without clipping. Use textual progress, semantic labels, accessible status announcements and focus on the first invalid field. Respect effective reduced motion from the device unless explicitly overridden. Card taps have Open button alternatives. Controllers/listeners are disposed; async UI updates check mounted state.
 
+## Parent deletion and session integrity
+
+Plan deletion always requires confirmation of cascading deletion of its logs. Cancel leaves all data unchanged. Reset removes only the active draft, never completed sessions. All dependent lists, counts and helper inputs refresh after committed edits/deletes. Writes use parameters, transactions and unique tokens; failed writes retain usable input. Navigation dialogs are subordinate to five screen roles, not extra core screens.
+
+## Design verification plan
+
+After approval, verify each of the 25 drawn states, both entities’ CRUD, rapid double taps, cascade/cancel, draft restart, helper baseline/five case types, persistence failures, offline restart and two device configurations. Ask a peer to trace create/log/correct/delete/cancel/settings tasks, record actual observation, revise, and recheck. No peer result or passed test is asserted here.
