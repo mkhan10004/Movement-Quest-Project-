@@ -39,7 +39,8 @@ class QuestController extends ChangeNotifier {
       logs = nextLogs;
       readError = null;
     } catch (_) {
-      readError = 'Saved records could not be loaded. Retry. Existing data is unchanged.';
+      readError =
+          'Saved records could not be loaded. Retry. Existing data is unchanged.';
     }
     loading = false;
     _emit();
@@ -58,7 +59,20 @@ class QuestController extends ChangeNotifier {
     }
   }
 
- 
+  Future<void> saveSettings(QuestSettings next) async {
+    if (busy) throw StateError('Please wait for the current save.');
+    busy = true;
+    _emit();
+    try {
+      await settingsStore.save(next);
+      settings = next;
+      settingsError = null;
+    } finally {
+      busy = false;
+      _emit();
+    }
+  }
+
   WorkoutPlan? plan(int id) {
     for (final p in plans) {
       if (p.id == id) return p;
