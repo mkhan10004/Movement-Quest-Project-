@@ -40,7 +40,7 @@ Pure Dart fixture evaluation runs ranking without Flutter. FFI repository tests 
 ## Design implementation notes
 Actual database identifiers use snake_case. The conceptual two-entity model is unchanged. Preferences are atomically represented by one JSON key, replacing the sketch's separate conceptual keys. Settings become visible after persistence succeeds, so a failure retains the last confirmed preference. This is documented in docs/design/design-changelog.md.
 
-## Verification against the October 24 app captures
+## Verification
 The visible catalog, editor, saved-set card and history are consistent with the source structure above. The editor rejects -5 sets; the detail capture displays three saved sets with actual reps 3, 8 and 10. The deletion dialogs describe the intended parent cascade and completed-session removal. Screenshots cannot verify internal SQL or lifecycle behavior. Current source and APK binaries were not supplied for comparison.
 
 Each installation owns its own SQLite database and settings. Separate device data is expected; no cloud sync is required or implemented in the available source.
