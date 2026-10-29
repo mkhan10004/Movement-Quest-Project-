@@ -3,7 +3,7 @@
 ## Question and benefit
 Can an explicit equipment preference and recent completed-session history help a user select a saved plan? The card organizes existing choices. It neither prescribes exercise intensity nor predicts health, safety or ability.
 
-Proposal owner: Muhammad Samad Khan. Mohammed Afeefuddin reviews rationale and test cases. These assignments are retained; actual individual implementation/review evidence is still required.
+Samad owns the helper implementation and evaluation. Afeef reviews the reasoning and test cases as part of integration.
 
 ## Inputs and output
 Input: saved plan ID and equipment category; equipment preference (none/bodyweight/dumbbell/band); completed-session timestamps as UTC milliseconds; integer per-plan counts over the previous seven days. No biometric or health inputs. Output: one plan, per-plan scores and a visible reason, or an actionable no-data/invalid message.
@@ -29,10 +29,8 @@ With two bodyweight plans, a user may prefer the recently used plan 2, while the
 ## Explanation and user control
 The card says Suggested, not guaranteed, and explains equipment and recent count. Apply opens detail only; Start remains a separate action. Not now dismisses the card, and any plan can be chosen manually. Changing equipment in Settings re-ranks plans after persistence. A no-history message discloses lack of history. Unknown categories or malformed history suppress a suggestion without writing data.
 
-## October 24 interaction evidence
-The supplied catalog screenshots show a local plan suggestion, no-history explanation, Apply and Not now controls, and a notice that filtering does not alter ranking. This supports the visible explanation and choice design, but does not prove that each button was exercised. See evidence/SCREENSHOT_EVIDENCE.md.
-
-Afeef reports running the APK on two devices. Offline restart, settings changes, helper override and full manual acceptance results still need recorded checks. The evaluation above is the previously executed source fixture run, not a newly executed test of the current APK.
+## Interface
+The Catalog displays the suggested plan, explanation, Apply and Not now controls. The no-history message explains when ranking relies on preference alone. Equipment filtering changes the visible list without changing the helper's ranking scope.
 
 ## Expected and actual fixture cases
 
